@@ -1,9 +1,8 @@
 #include <iostream>
 #include "pieces.h"
 
-Queen::Queen(int row, int column, int color, Board board[][8]) : Piece(row, column, color, board) {
+Queen::Queen(int row, int column, int color) : Piece(row, column, color) {
     setType(QUEEN);
-    board[Row][Column].piece = QUEEN;
     itMoved(false);
     setValue(9);
 }
@@ -26,7 +25,7 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // UP LINE
 
     while (firstLineY >= 0) {
-        if (matrix2[firstLineY][firstLineX].piece != FREE && Color == matrix2[firstLineY][firstLineX].piece_color) {
+        if (matrix2[firstLineY][firstLineX].piece.Type != FREE && Color == matrix2[firstLineY][firstLineX].piece_color) {
             break;
         }
 
@@ -38,7 +37,7 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // RIGHT LINE
 
     while (secondLineX <= 7) {
-        if (matrix2[secondLineY][secondLineX].piece != FREE && Color == matrix2[secondLineY][secondLineX].piece_color) {
+        if (matrix2[secondLineY][secondLineX].piece.Type != FREE && Color == matrix2[secondLineY][secondLineX].piece_color) {
             break;
         }
 
@@ -50,7 +49,7 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // DOWN LINE
 
     while (thirdLineY <= 7) {
-        if (matrix2[thirdLineY][thirdLineX].piece != FREE && Color == matrix2[thirdLineY][thirdLineX].piece_color) {
+        if (matrix2[thirdLineY][thirdLineX].piece.Type != FREE && Color == matrix2[thirdLineY][thirdLineX].piece_color) {
             break;
         }
 
@@ -62,7 +61,7 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // LEFT LINE
 
     while (forthLineX >= 0) {
-        if (matrix2[forthLineY][forthLineX].piece != FREE && Color == matrix2[forthLineY][forthLineX].piece_color) {
+        if (matrix2[forthLineY][forthLineX].piece.Type != FREE && Color == matrix2[forthLineY][forthLineX].piece_color) {
             break;
         }
 
@@ -88,7 +87,7 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // FIRST DIAGONAL
     
     while (firstDiagonalX >= 0 && firstDiagonalY >= 0) {
-        if (matrix2[firstDiagonalY][firstDiagonalX].piece != FREE && Color == matrix2[firstDiagonalY][firstDiagonalX].piece_color) {
+        if (matrix2[firstDiagonalY][firstDiagonalX].piece.Type != FREE && Color == matrix2[firstDiagonalY][firstDiagonalX].piece_color) {
             break;
         }
 
@@ -101,7 +100,7 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // SECOND DIAGONAL
 
     while (secondDiagonalX <= 7 && secondDiagonalY >= 0) {
-        if (matrix2[secondDiagonalY][secondDiagonalX].piece != FREE && Color == matrix2[secondDiagonalY][secondDiagonalX].piece_color) {
+        if (matrix2[secondDiagonalY][secondDiagonalX].piece.Type != FREE && Color == matrix2[secondDiagonalY][secondDiagonalX].piece_color) {
             break;
         }
 
@@ -114,7 +113,7 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // THIRD DIAGONAL
 
     while (thirdDiagonalX <= 7 && thirdDiagonalY <= 7) {
-        if (matrix2[thirdDiagonalY][thirdDiagonalX].piece != FREE && Color == matrix2[thirdDiagonalY][thirdDiagonalX].piece_color) {
+        if (matrix2[thirdDiagonalY][thirdDiagonalX].piece.Type != FREE && Color == matrix2[thirdDiagonalY][thirdDiagonalX].piece_color) {
             break;
         }
 
@@ -127,7 +126,7 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // FORTH DIAGONAL
     
     while (forthDiagonalX >= 0 && forthDiagonalY <= 7) {
-        if (matrix2[forthDiagonalY][forthDiagonalX].piece != FREE && Color == matrix2[forthDiagonalY][forthDiagonalX].piece_color) {
+        if (matrix2[forthDiagonalY][forthDiagonalX].piece.Type != FREE && Color == matrix2[forthDiagonalY][forthDiagonalX].piece_color) {
             break;
         }
 

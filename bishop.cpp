@@ -1,14 +1,13 @@
 #include <iostream>
 #include "pieces.h"
 
-Bishop::Bishop(int row, int column, int color, Board board[][8]) : Piece(row, column, color, board) {
+Bishop::Bishop(int row, int column, int color) : Piece(row, column, color) {
     setType(BISHOP);
-    board[Row][Column].piece = BISHOP;
     itMoved(false);
     setValue(3);
 }
 
-void Bishop::possibleSquares(string matrix[][8], Board matrix2[][8]) {
+void Bishop::possibleSquares(Board matrix[][8]) {
     int firstDiagonalX = Column - 1;
     int firstDiagonalY = Row - 1;
 
@@ -21,14 +20,18 @@ void Bishop::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     int forthDiagonalX = Column - 1;
     int forthDiagonalY = Row + 1;
 
+    auto isEmpty = [&](int row, int column) {
+        return matrix[row][column].piece == nullptr;
+    };
+
     // FIRST DIAGONAL
     
     while (firstDiagonalX >= 0 && firstDiagonalY >= 0) {
-        if (matrix2[firstDiagonalY][firstDiagonalX].piece != FREE && Color == matrix2[firstDiagonalY][firstDiagonalX].piece_color) {
+        if (!isEmpty(firstDiagonalY, firstDiagonalX)) {
             break;
         }
 
-        matrix[firstDiagonalY][firstDiagonalX] = "■ ";
+        matrix[firstDiagonalY][firstDiagonalX].movable = true;
 
         firstDiagonalX--;
         firstDiagonalY--;
@@ -37,11 +40,11 @@ void Bishop::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // SECOND DIAGONAL
 
     while (secondDiagonalX <= 7 && secondDiagonalY >= 0) {
-        if (matrix2[secondDiagonalY][secondDiagonalX].piece != FREE && Color == matrix2[secondDiagonalY][secondDiagonalX].piece_color) {
+        if (!isEmpty(secondDiagonalY, secondDiagonalX)) {
             break;
         }
 
-        matrix[secondDiagonalY][secondDiagonalX] = "■ ";
+        matrix[secondDiagonalY][secondDiagonalX].movable = true;
 
         secondDiagonalX++;
         secondDiagonalY--;
@@ -50,11 +53,11 @@ void Bishop::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // THIRD DIAGONAL
 
     while (thirdDiagonalX <= 7 && thirdDiagonalY <= 7) {
-        if (matrix2[thirdDiagonalY][thirdDiagonalX].piece != FREE && Color == matrix2[thirdDiagonalY][thirdDiagonalX].piece_color) {
+        if (!isEmpty(thirdDiagonalY, thirdDiagonalX)) {
             break;
         }
 
-        matrix[thirdDiagonalY][thirdDiagonalX] = "■ ";
+        matrix[thirdDiagonalY][thirdDiagonalX].movable = true;
 
         thirdDiagonalX++;
         thirdDiagonalY++;
@@ -63,11 +66,11 @@ void Bishop::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // FORTH DIAGONAL
     
     while (forthDiagonalX >= 0 && forthDiagonalY <= 7) {
-        if (matrix2[forthDiagonalY][forthDiagonalX].piece != FREE && Color == matrix2[forthDiagonalY][forthDiagonalX].piece_color) {
+        if (!isEmpty(forthDiagonalY, forthDiagonalX)) {
             break;
         }
 
-        matrix[forthDiagonalY][forthDiagonalX] = "■ ";
+        matrix[forthDiagonalY][forthDiagonalX].movable = true;
 
         forthDiagonalX--;
         forthDiagonalY++;

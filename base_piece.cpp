@@ -1,11 +1,20 @@
 #include <iostream>
 #include "base_piece.h"
 
-Piece::Piece(int row, int column, int color, Board board[][8]) {
+Piece::Piece() {
+    Row = 0;
+    Column = 0;
+    Color = 0;
+    Value = 0;
+    Type = FREE;
+    Moved = false;
+    Selected = false;
+}
+
+Piece::Piece(int row, int column, int color) {
     Row = row;
     Column = column;
     Color = color;
-    board[Row][Column].piece_color = color;
 }
 
 void Piece::setType(int type) {

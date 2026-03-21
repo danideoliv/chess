@@ -1,9 +1,8 @@
 #include <iostream>
 #include "pieces.h"
 
-Rook::Rook(int row, int column, int color, Board board[][8]) : Piece(row, column, color, board) {
+Rook::Rook(int row, int column, int color) : Piece(row, column, color) {
     setType(ROOK);
-    board[Row][Column].piece = ROOK;
     itMoved(false);
     setValue(5);
 }
@@ -24,7 +23,7 @@ void Rook::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // UP LINE
 
     while (firstLineY >= 0) {
-        if (matrix2[firstLineY][firstLineX].piece != FREE && Color == matrix2[firstLineY][firstLineX].piece_color) {
+        if (matrix2[firstLineY][firstLineX].piece.Type != FREE && Color == matrix2[firstLineY][firstLineX].piece_color) {
             break;
         }
 
@@ -36,7 +35,7 @@ void Rook::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // RIGHT LINE
 
     while (secondLineX <= 7) {
-        if (matrix2[secondLineY][secondLineX].piece != FREE && Color == matrix2[secondLineY][secondLineX].piece_color) {
+        if (matrix2[secondLineY][secondLineX].piece.Type != FREE && Color == matrix2[secondLineY][secondLineX].piece_color) {
             break;
         }
 
@@ -48,7 +47,7 @@ void Rook::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // DOWN LINE
 
     while (thirdLineY <= 7) {
-        if (matrix2[thirdLineY][thirdLineX].piece != FREE && Color == matrix2[thirdLineY][thirdLineX].piece_color) {
+        if (matrix2[thirdLineY][thirdLineX].piece.Type != FREE && Color == matrix2[thirdLineY][thirdLineX].piece_color) {
             break;
         }
 
@@ -60,7 +59,7 @@ void Rook::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // LEFT LINE
 
     while (forthLineX >= 0) {
-        if (matrix2[forthLineY][forthLineX].piece != FREE && Color == matrix2[forthLineY][forthLineX].piece_color) {
+        if (matrix2[forthLineY][forthLineX].piece.Type != FREE && Color == matrix2[forthLineY][forthLineX].piece_color) {
             break;
         }
 

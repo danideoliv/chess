@@ -1,59 +1,66 @@
 #include <iostream>
 #include "pieces.h"
 
-Pawn::Pawn(int row, int column, int color, Board board[][8]) : Piece(row, column, color, board) {
+Pawn::Pawn(int row, int column, int color) : Piece(row, column, color) {
     setType(PAWN);
-    board[Row][Column].piece = PAWN;
     itMoved(false);
     setValue(1);
 }
 
-void Pawn::possibleSquares(string matrix[][8], Board matrix2[][8]) {
+void Pawn::possibleSquares(Board matrix[][8]) {
     int pawnY = Row;
     int pawnX = Column;
 
+    auto isEmpty = [&](int row, int column) {
+        return matrix[row][column].piece == nullptr;
+    };
+
+    auto hasEnemyPiece = [&](int row, int column) {
+        return matrix[row][column].piece != nullptr && Color != matrix[row][column].piece->Color;
+    };
+
     if (Moved == false) {
-        if (Color == WHITE) {
-            if (matrix2[pawnY - 2][pawnX].piece == FREE && matrix2[pawnY - 1][pawnX].piece == FREE) {
-                matrix[pawnY - 1][pawnX] = "■ ";
-                matrix[pawnY - 2][pawnX] = "■ ";
-            } else if (matrix2[pawnY - 1][pawnX].piece == FREE) {
-                matrix[pawnY - 1][pawnX] = "■ ";
+        if (Color == BRANCO) {
+            if (isEmpty(pawnY - 2, pawnX) && isEmpty(pawnY - 1, pawnX)) {
+                matrix[pawnY - 1][pawnX].movable = true;
+                matrix[pawnY - 2][pawnX].movable = true;
+            } else if (isEmpty(pawnY - 1, pawnX)) {
+                matrix[pawnY - 1][pawnX].movable = true;
             }
         } else {
-            if (matrix2[pawnY + 2][pawnX].piece == FREE && matrix2[pawnY + 1][pawnX].piece == FREE) {
-                matrix[pawnY + 1][pawnX] = "■ ";
-                matrix[pawnY + 2][pawnX] = "■ ";
-            } else if (matrix2[pawnY - 1][pawnX].piece == FREE) {
-                matrix[pawnY + 1][pawnX] = "■ ";
+            if (isEmpty(pawnY + 2, pawnX) && isEmpty(pawnY + 1, pawnX)) {
+                matrix[pawnY + 1][pawnX].movable = true;
+                matrix[pawnY + 2][pawnX].movable = true;
+            } else if (isEmpty(pawnY + 1, pawnX)) {
+                matrix[pawnY + 1][pawnX].movable = true;
             }
         }
     } else {
-        if (Color == WHITE) {
-            if (matrix2[pawnY - 1][pawnX].piece == FREE)
-                matrix[pawnY - 1][pawnX] = "■ ";
+        if (Color == BRANCO) {
+            if (isEmpty(pawnY - 1, pawnX))
+                matrix[pawnY - 1][pawnX].movable = true;
         } else {
-            if (matrix2[pawnY + 1][pawnX].piece == FREE)
-                matrix[pawnY + 1][pawnX] = "■ ";
+            if (isEmpty(pawnY + 1, pawnX))
+                matrix[pawnY + 1][pawnX].movable = true;
         }
     }
 
-    if (Color == WHITE) {
-        if (matrix2[pawnY - 1][pawnX + 1].piece != FREE && Color != matrix2[pawnY - 1][pawnX + 1].piece_color) {
+    if (Color == BRANCO) {
+        if (hasEnemyPiece(pawnY - 1, pawnX + 1)) {
             // Farei algo
         }
 
-        if (matrix2[pawnY - 1][pawnX - 1].piece != FREE && Color != matrix2[pawnY - 1][pawnX - 1].piece_color) {
+        if (hasEnemyPiece(pawnY - 1, pawnX - 1)) {
             // Farei algo
         }
     }
 
-    if (Color == WHITE) {
-        if (matrix2[pawnY + 1][pawnX + 1].piece != FREE && Color != matrix2[pawnY + 1][pawnX + 1].piece_color) {
+    if (Color == PRETO) {
+        if (hasEnemyPiece(pawnY + 1, pawnX + 1)) {
             // Farei algo
         }
 
-        if (matrix2[pawnY + 1][pawnX - 1].piece != FREE && Color != matrix2[pawnY + 1][pawnX - 1].piece_color) {
+        if (hasEnemyPiece(pawnY + 1, pawnX - 1)) {
             // Farei algo
         }
     }

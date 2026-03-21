@@ -1,55 +1,54 @@
 #include <iostream>
 #include "pieces.h"
 
-King::King(int row, int column, int color, Board board[][8]) : Piece(row, column, color, board) {
+King::King(int row, int column, int color) : Piece(row, column, color) {
     setType(KING);
-    board[Row][Column].piece = KING;
     itMoved(false);
     setValue(0);
 }
 
-void King::possibleSquares(string matrix[][8]) {
+void King::possibleSquares(Board matrix[][8]) {
     int kingY = Row;
     int kingX = Column;
+
+    auto isEmpty = [&](int row, int column) {
+        return matrix[row][column].piece == nullptr;
+    };
 
     bool kingUp = false;
     bool kingRight = false;
     bool kingDown = false;
     bool kingLeft = false;
     
-    if (kingY - 1 >= 0) {
-        kingUp = true;
-        matrix[kingY - 1][kingX] = "■ ";
+    if (kingY - 1 >= 0 && isEmpty(kingY - 1, kingX)) {
+        matrix[kingY - 1][kingX].movable = true;
     } 
 
-    if (kingX + 1 <= 7) {
-        kingRight = true;
-        matrix[kingY][kingX + 1] = "■ ";
+    if (kingX + 1 <= 7 && isEmpty(kingY, kingX + 1)) {
+        matrix[kingY][kingX + 1].movable = true;
     }
 
-    if (kingY + 1 <= 7) {
-        kingDown = true;
-        matrix[kingY + 1][kingX] = "■ ";
+    if (kingY + 1 <= 7 && isEmpty(kingY + 1, kingX)) {
+        matrix[kingY + 1][kingX].movable = true;
     } 
 
-    if (kingX - 1>= 0) {
-        kingLeft = true;
-        matrix[kingY][kingX - 1] = "■ ";
+    if (kingX - 1>= 0 && isEmpty(kingY, kingX - 1)) {
+        matrix[kingY][kingX - 1].movable = true;
     }
 
-    if (kingUp == true && kingRight == true)  {
-        matrix[kingY - 1][kingX + 1] = "■ ";
+    if (kingY - 1 >= 0 && kingX + 1 <= 7 && isEmpty(kingY - 1, kingX + 1))  {
+        matrix[kingY - 1][kingX + 1].movable = true;
     }
 
-    if (kingRight == true && kingDown == true)  {
-        matrix[kingY + 1][kingX + 1] = "■ ";
+    if (kingX + 1 <= 7 && kingY + 1 <= 7 && isEmpty(kingY + 1, kingX + 1))  {
+        matrix[kingY + 1][kingX + 1].movable = true;
     }
 
-    if (kingDown == true && kingLeft == true)  {
-        matrix[kingY + 1][kingX - 1] = "■ ";
+    if (kingY + 1 <= 7 && kingX - 1>= 0 && isEmpty(kingY + 1, kingX - 1))  {
+        matrix[kingY + 1][kingX - 1].movable = true;
     }
 
-    if (kingLeft == true && kingUp == true)  {
-        matrix[kingY - 1][kingX - 1] = "■ ";
+    if (kingX - 1>= 0 && kingY - 1 >= 0 && isEmpty(kingY - 1, kingX - 1))  {
+        matrix[kingY - 1][kingX - 1].movable = true;
     }
 }
