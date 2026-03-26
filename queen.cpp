@@ -7,7 +7,15 @@ Queen::Queen(int row, int column, int color) : Piece(row, column, color) {
     setValue(9);
 }
 
-void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
+void Queen::possibleSquares(Board matrix[][8]) {
+    auto isEmpty = [&](int row, int column) {
+        return matrix[row][column].piece == nullptr;
+    };
+
+    auto hasEnemyPiece = [&](int row, int column) {
+        return matrix[row][column].piece != nullptr && Color != matrix[row][column].piece->Color;
+    };
+
     // CROSS
 
     int firstLineX = Column;
@@ -25,11 +33,16 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // UP LINE
 
     while (firstLineY >= 0) {
-        if (matrix2[firstLineY][firstLineX].piece.Type != FREE && Color == matrix2[firstLineY][firstLineX].piece_color) {
+        if (hasEnemyPiece(firstLineY, firstLineX)) {
+            matrix[firstLineY][firstLineX].piece->Threatened = true;
             break;
         }
 
-        matrix[firstLineY][firstLineX] = "■ ";
+        if (!isEmpty(firstLineY, firstLineX)) {
+            break;
+        }
+
+        matrix[firstLineY][firstLineX].movable = true;
 
         firstLineY--;
     }
@@ -37,11 +50,16 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // RIGHT LINE
 
     while (secondLineX <= 7) {
-        if (matrix2[secondLineY][secondLineX].piece.Type != FREE && Color == matrix2[secondLineY][secondLineX].piece_color) {
+        if (hasEnemyPiece(secondLineY, secondLineX)) {
+            matrix[secondLineY][secondLineX].piece->Threatened = true;
             break;
         }
 
-        matrix[secondLineY][secondLineX] = "■ ";
+        if (!isEmpty(secondLineY, secondLineX)) {
+            break;
+        }
+
+        matrix[secondLineY][secondLineX].movable = true;
 
         secondLineX++;
     }
@@ -49,11 +67,16 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // DOWN LINE
 
     while (thirdLineY <= 7) {
-        if (matrix2[thirdLineY][thirdLineX].piece.Type != FREE && Color == matrix2[thirdLineY][thirdLineX].piece_color) {
+        if (hasEnemyPiece(thirdLineY, thirdLineX)) {
+            matrix[thirdLineY][thirdLineX].piece->Threatened = true;
             break;
         }
 
-        matrix[thirdLineY][thirdLineX] = "■ ";
+        if (!isEmpty(thirdLineY, thirdLineX)) {
+            break;
+        }
+
+        matrix[thirdLineY][thirdLineX].movable = true;
 
         thirdLineY++;
     }
@@ -61,11 +84,16 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // LEFT LINE
 
     while (forthLineX >= 0) {
-        if (matrix2[forthLineY][forthLineX].piece.Type != FREE && Color == matrix2[forthLineY][forthLineX].piece_color) {
+        if (hasEnemyPiece(forthLineY, forthLineX)) {
+            matrix[forthLineY][forthLineX].piece->Threatened = true;
             break;
         }
 
-        matrix[forthLineY][forthLineX] = "■ ";
+        if (!isEmpty(forthLineY, forthLineX)) {
+            break;
+        }
+
+        matrix[forthLineY][forthLineX].movable = true;
 
         forthLineX--;
     }
@@ -87,11 +115,16 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // FIRST DIAGONAL
     
     while (firstDiagonalX >= 0 && firstDiagonalY >= 0) {
-        if (matrix2[firstDiagonalY][firstDiagonalX].piece.Type != FREE && Color == matrix2[firstDiagonalY][firstDiagonalX].piece_color) {
+        if (hasEnemyPiece(firstDiagonalY, firstDiagonalX)) {
+            matrix[firstDiagonalY][firstDiagonalX].piece->Threatened = true;
             break;
         }
 
-        matrix[firstDiagonalY][firstDiagonalX] = "■ ";
+        if (!isEmpty(firstDiagonalY, firstDiagonalX)) {
+            break;
+        }
+
+        matrix[firstDiagonalY][firstDiagonalX].movable = true;
 
         firstDiagonalX--;
         firstDiagonalY--;
@@ -100,11 +133,16 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // SECOND DIAGONAL
 
     while (secondDiagonalX <= 7 && secondDiagonalY >= 0) {
-        if (matrix2[secondDiagonalY][secondDiagonalX].piece.Type != FREE && Color == matrix2[secondDiagonalY][secondDiagonalX].piece_color) {
+        if (hasEnemyPiece(secondDiagonalY, secondDiagonalX)) {
+            matrix[secondDiagonalY][secondDiagonalX].piece->Threatened = true;
             break;
         }
 
-        matrix[secondDiagonalY][secondDiagonalX] = "■ ";
+        if (!isEmpty(secondDiagonalY, secondDiagonalX)) {
+            break;
+        }
+
+        matrix[secondDiagonalY][secondDiagonalX].movable = true;
 
         secondDiagonalX++;
         secondDiagonalY--;
@@ -113,11 +151,16 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // THIRD DIAGONAL
 
     while (thirdDiagonalX <= 7 && thirdDiagonalY <= 7) {
-        if (matrix2[thirdDiagonalY][thirdDiagonalX].piece.Type != FREE && Color == matrix2[thirdDiagonalY][thirdDiagonalX].piece_color) {
+        if (hasEnemyPiece(thirdDiagonalY, thirdDiagonalX)) {
+            matrix[thirdDiagonalY][thirdDiagonalX].piece->Threatened = true;
             break;
         }
 
-        matrix[thirdDiagonalY][thirdDiagonalX] = "■ ";
+        if (!isEmpty(thirdDiagonalY, thirdDiagonalX)) {
+            break;
+        }
+
+        matrix[thirdDiagonalY][thirdDiagonalX].movable = true;
 
         thirdDiagonalX++;
         thirdDiagonalY++;
@@ -126,11 +169,16 @@ void Queen::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // FORTH DIAGONAL
     
     while (forthDiagonalX >= 0 && forthDiagonalY <= 7) {
-        if (matrix2[forthDiagonalY][forthDiagonalX].piece.Type != FREE && Color == matrix2[forthDiagonalY][forthDiagonalX].piece_color) {
+        if (hasEnemyPiece(forthDiagonalY, forthDiagonalX)) {
+            matrix[forthDiagonalY][forthDiagonalX].piece->Threatened = true;
             break;
         }
 
-        matrix[forthDiagonalY][forthDiagonalX] = "■ ";
+        if (!isEmpty(forthDiagonalY, forthDiagonalX)) {
+            break;
+        }
+
+        matrix[forthDiagonalY][forthDiagonalX].movable = true;
 
         forthDiagonalX--;
         forthDiagonalY++;

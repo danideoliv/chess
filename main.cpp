@@ -1,6 +1,7 @@
 #include <iostream>
 #include "pieces.h"
 #include "raylib.h"
+#include <vector>
 
 using namespace std;
 
@@ -61,33 +62,6 @@ int main() {
         }
     }
 
-    // Rook bRook1(0, 0, PRETO);
-    // Knight bKnight1(0, 1, PRETO);
-    // Bishop bBishop1(0, 2, PRETO);
-    // Queen bQueen(0, 3, PRETO);
-    // King bKing(0, 4, PRETO);
-    // Bishop bBishop2(0, 5, PRETO);
-    // Knight bKnight2(0, 6, PRETO);
-    // Rook bRook2(0, 7, PRETO);
-    
-    // Pawn wPawn1(6, 0, BRANCO);
-    // Pawn wPawn2(6, 1, BRANCO);
-    // Pawn wPawn3(6, 2, BRANCO);
-    // Pawn wPawn4(6, 3, BRANCO);
-    // Pawn wPawn5(6, 4, BRANCO);
-    // Pawn wPawn6(6, 5, BRANCO);
-    // Pawn wPawn7(6, 6, BRANCO);
-    // Pawn wPawn8(6, 7, BRANCO);
-
-    // Rook wRook1(7, 0, BRANCO);
-    // Knight wKnight1(7, 1, BRANCO);
-    // Bishop wBishop1(7, 2, BRANCO);
-    // Queen wQueen(7, 3, BRANCO);
-    // King wKing(7, 4, BRANCO);
-    // Bishop wBishop2(7, 5, BRANCO);
-    // Knight wKnight2(7, 6, BRANCO);
-    // Rook wRook2(7, 7, BRANCO);
-
     for (int i = 0; i < 8; i++) {
         board[1][i].piece = std::make_unique<Pawn>(1, i, PRETO);
     }
@@ -96,44 +70,23 @@ int main() {
         board[6][i].piece = std::make_unique<Pawn>(6, i, BRANCO);
     }
 
+    board[0][0].piece = std::make_unique<Rook>(0, 0, PRETO);
     board[0][1].piece = std::make_unique<Knight>(0, 1, PRETO);
     board[0][2].piece = std::make_unique<Bishop>(0, 2, PRETO);
+    board[0][3].piece = std::make_unique<Queen>(0, 3, PRETO);
     board[0][4].piece = std::make_unique<King>(0, 4, PRETO);
     board[0][5].piece = std::make_unique<Bishop>(0, 5, PRETO);
     board[0][6].piece = std::make_unique<Knight>(0, 6, PRETO);
+    board[0][7].piece = std::make_unique<Rook>(0, 7, PRETO);
 
-    // board[0][0].piece = bRook1;
-    // board[0][1].piece = bKnight1;
-    // board[0][2].piece = bBishop1;
-    // board[0][3].piece = bQueen;
-    // board[0][4].piece = bKing;
-    // board[0][5].piece = bBishop2;
-    // board[0][6].piece = bKnight2;
-    // board[0][7].piece = bRook2;
-
-    // board[6][0].piece = wPawn1;
-    // board[6][1].piece = wPawn2;
-    // board[6][2].piece = wPawn3;
-    // board[6][3].piece = wPawn4;
-    // board[6][4].piece = wPawn5;
-    // board[6][5].piece = wPawn6;
-    // board[6][6].piece = wPawn7;
-    // board[6][7].piece = wPawn8;
-
-    // board[7][0].piece = wRook1;
-    // board[7][1].piece = wKnight1;
-    // board[7][2].piece = wBishop1;
-    // board[7][3].piece = wQueen;
-    // board[7][4].piece = wKing;
-    // board[7][5].piece = wBishop2;
-    // board[7][6].piece = wKnight2;
-    // board[7][7].piece = wRook2;
-
+    board[7][0].piece = std::make_unique<Rook>(7, 0, BRANCO);
     board[7][1].piece = std::make_unique<Knight>(7, 1, BRANCO);
     board[7][2].piece = std::make_unique<Bishop>(7, 2, BRANCO);
+    board[7][3].piece = std::make_unique<Queen>(7, 3, BRANCO);
     board[7][4].piece = std::make_unique<King>(7, 4, BRANCO);
     board[7][5].piece = std::make_unique<Bishop>(7, 5, BRANCO);
     board[7][6].piece = std::make_unique<Knight>(7, 6, BRANCO);
+    board[7][7].piece = std::make_unique<Rook>(7, 7, BRANCO);
 
 
     Rectangle squares[8][8];
@@ -164,6 +117,7 @@ int main() {
     Texture2D blackQueen = LoadTexture("/home/nydawar/coding_stuff/chess/piece_images/black/black-queen.png");
 
     Texture2D dot = LoadTexture("/home/nydawar/coding_stuff/chess/piece_images/dot.png");
+    Texture2D circle = LoadTexture("/home/nydawar/coding_stuff/chess/piece_images/circle.png");
 
 
     SetTargetFPS(60);
@@ -193,15 +147,19 @@ int main() {
                     if (board[i][j].color == PRETO)
                         board[i][j].drawColor = boardGreen;
 
-                    if (board[i][j].piece && board[i][j].piece->Selected == true)
+                    if (board[i][j].piece && board[i][j].piece->Selected)
                         board[i][j].drawColor = selected;
 
                     if (board[i][j].movable) {
                         DrawTexture(dot, squares[i][j].x, squares[i][j].y, WHITE);
                     }
 
+                    if (board[i][j].piece && board[i][j].piece->Threatened) {
+                        DrawTexture(circle, squares[i][j].x, squares[i][j].y, WHITE);
+                    }
+
                     if (CheckCollisionPointRec(mouse, squares[i][j])) {
-                        if (!board[i][j].movable)
+                        if (!board[i][j].movable && !(board[i][j].piece && board[i][j].piece->Threatened))
                             DrawRectangleRec(squares[i][j], board[i][j].drawColor);
                         
                         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -210,7 +168,7 @@ int main() {
 
                                 for (int k = 0; k < 8 && !movedPiece; k++) {
                                     for (int l = 0; l < 8; l++) {
-                                        if (board[k][l].piece && board[k][l].piece->Selected == true && board[i][j].movable) {
+                                        if (board[k][l].piece && board[k][l].piece->Selected && board[i][j].movable) {
                                             board[k][l].piece->Row = i;
                                             board[k][l].piece->Column = j;
                                             board[i][j].piece = move(board[k][l].piece);
@@ -228,35 +186,80 @@ int main() {
                                         if (board[k][l].movable) 
                                             board[k][l].movable = false;
 
-                                        if (board[k][l].piece && board[k][l].piece->Selected == true) 
+                                        if (board[k][l].piece && board[k][l].piece->Selected) 
                                             board[k][l].piece->Selected = false;
+
+                                        if (board[k][l].piece && board[k][l].piece->Threatened) 
+                                            board[k][l].piece->Threatened = false;
                                     }
                                 }
 
                                 continue;
                             }
+
+                            if (board[i][j].piece && board[i][j].piece->Threatened) {
+                                for (int k = 0; k < 8; k++) {
+                                    for (int l = 0; l < 8; l++) {
+                                        if (board[k][l].piece && board[k][l].piece->Selected) {
+                                            board[k][l].piece->Row = i;
+                                            board[k][l].piece->Column = j;
+                                            board[i][j].piece = move(board[k][l].piece);
+                                            board[i][j].piece->itMoved(true);
+                                            board[i][j].piece->Selected = false;
+
+                                            whitesTurn = !whitesTurn;
+                                        }
+                                    }
+                                }
+
+                                for (int k = 0; k < 8; k++) {
+                                    for (int l = 0; l < 8; l++) {
+                                        if (board[k][l].movable) 
+                                            board[k][l].movable = false;
+
+                                        if (board[k][l].piece && board[k][l].piece->Threatened) 
+                                            board[k][l].piece->Threatened = false;
+                                    }
+                                }
+                            }
+
+                            // for (int k = 0; k < 8; k++) {
+                            //     for (int l = 0; l < 8; l++) {
+                            //         if (board[k][l].piece && board[k][l].piece->Type == BISHOP) {
+                            //             board[k][l].piece->check(board);
+                            //         }
+                            //     }
+                            // }
+
+                            // O segredo é o tabuleiro, mané!
 
                             if (whitesTurn && board[i][j].piece->Color == PRETO)
                                 continue;
 
                             if (!whitesTurn && board[i][j].piece->Color == BRANCO)
                                 continue;
-                        
+
                             for (int k = 0; k < 8; k++) {
                                 for (int l = 0; l < 8; l++) {
-                                    if (board[k][l].movable) {
+                                    if (board[k][l].movable) 
                                         board[k][l].movable = false;
 
-                                        if (board[k][l].color == BRANCO)
-                                            board[k][l].drawColor = boardWhite;
-                                        else
-                                            board[k][l].drawColor = boardGreen;
-                                    }
+                                    if (board[k][l].piece && board[k][l].piece->Threatened) 
+                                            board[k][l].piece->Threatened = false;
+                                    
                                 }
                             }
 
                             if (board[i][j].piece->Selected == true) {
                                 board[i][j].piece->Selected = false;
+
+                                for (int k = 0; k < 8; k++) {
+                                    for (int l = 0; l < 8; l++) {
+                                        if (board[k][l].piece && board[k][l].piece->Threatened) 
+                                            board[k][l].piece->Threatened = false;
+                                    }
+                                }
+
                                 continue;
                             }
 
@@ -264,12 +267,8 @@ int main() {
 
                             for (int k = 0; k < 8; k++) {
                                 for (int l = 0; l < 8; l++) {
-                                    if (board[k][l].piece && board[k][l].piece->Selected == true)
+                                    if (board[k][l].piece && board[k][l].piece->Selected)
                                         board[k][l].piece->Selected = false;
-
-                                    // if (board[i][j].movable) {
-                                    //     DrawTexture(dot, squares[i][j].x, squares[i][j].y, WHITE);
-                                    // }
                                 }
                             }
 
@@ -277,21 +276,6 @@ int main() {
                             board[i][j].drawColor = selected;
                         }
                     }
-
-                    // for (int k = 0; k < 8; k++) {
-                    //     for (int l = 0; l < 8; l++) {
-                    //         if (board[k][l].piece && board[k][l].piece->Selected == true)
-                    //             continue;
-
-                    //         if (board[k][l].movable)
-                    //             continue;
-
-                    //         if (board[k][l].color == BRANCO)
-                    //             board[k][l].drawColor = boardWhite;
-                    //         else
-                    //             board[k][l].drawColor = boardGreen;
-                    //     }
-                    // }
                 }
             }
 
@@ -351,17 +335,6 @@ int main() {
                     }
                 }
             }
-
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
-                    // if
-                }
-            }
-            
-            // DrawLineEx((Vector2){100, 20}, (Vector2){612, 20}, 6.0, lineColor);
-            // DrawLineEx((Vector2){100, 17}, (Vector2){100, 538}, 6.0, lineColor);
-            // DrawLineEx((Vector2){100, 535}, (Vector2){612, 535}, 6.0, lineColor);
-            // DrawLineEx((Vector2){612, 17}, (Vector2){612, 538}, 6.0, lineColor);
 
         EndDrawing();
     }

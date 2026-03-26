@@ -7,7 +7,7 @@ Rook::Rook(int row, int column, int color) : Piece(row, column, color) {
     setValue(5);
 }
 
-void Rook::possibleSquares(string matrix[][8], Board matrix2[][8]) {
+void Rook::possibleSquares(Board matrix[][8]) {
     int firstLineX = Column;
     int firstLineY = Row - 1;
 
@@ -20,14 +20,27 @@ void Rook::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     int forthLineX = Column - 1;
     int forthLineY = Row;
 
+    auto isEmpty = [&](int row, int column) {
+        return matrix[row][column].piece == nullptr;
+    };
+
+    auto hasEnemyPiece = [&](int row, int column) {
+        return matrix[row][column].piece != nullptr && Color != matrix[row][column].piece->Color;
+    };
+
     // UP LINE
 
     while (firstLineY >= 0) {
-        if (matrix2[firstLineY][firstLineX].piece.Type != FREE && Color == matrix2[firstLineY][firstLineX].piece_color) {
+        if (hasEnemyPiece(firstLineY, firstLineX)) {
+            matrix[firstLineY][firstLineX].piece->Threatened = true;
             break;
         }
 
-        matrix[firstLineY][firstLineX] = "■ ";
+        if (!isEmpty(firstLineY, firstLineX)) {
+            break;
+        }
+
+        matrix[firstLineY][firstLineX].movable = true;
 
         firstLineY--;
     }
@@ -35,11 +48,16 @@ void Rook::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // RIGHT LINE
 
     while (secondLineX <= 7) {
-        if (matrix2[secondLineY][secondLineX].piece.Type != FREE && Color == matrix2[secondLineY][secondLineX].piece_color) {
+        if (hasEnemyPiece(secondLineY, secondLineX)) {
+            matrix[secondLineY][secondLineX].piece->Threatened = true;
             break;
         }
 
-        matrix[secondLineY][secondLineX] = "■ ";
+        if (!isEmpty(secondLineY, secondLineX)) {
+            break;
+        }
+
+        matrix[secondLineY][secondLineX].movable = true;
 
         secondLineX++;
     }
@@ -47,11 +65,16 @@ void Rook::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // DOWN LINE
 
     while (thirdLineY <= 7) {
-        if (matrix2[thirdLineY][thirdLineX].piece.Type != FREE && Color == matrix2[thirdLineY][thirdLineX].piece_color) {
+        if (hasEnemyPiece(thirdLineY, thirdLineX)) {
+            matrix[thirdLineY][thirdLineX].piece->Threatened = true;
             break;
         }
 
-        matrix[thirdLineY][thirdLineX] = "■ ";
+        if (!isEmpty(thirdLineY, thirdLineX)) {
+            break;
+        }
+
+        matrix[thirdLineY][thirdLineX].movable = true;
 
         thirdLineY++;
     }
@@ -59,11 +82,16 @@ void Rook::possibleSquares(string matrix[][8], Board matrix2[][8]) {
     // LEFT LINE
 
     while (forthLineX >= 0) {
-        if (matrix2[forthLineY][forthLineX].piece.Type != FREE && Color == matrix2[forthLineY][forthLineX].piece_color) {
+        if (hasEnemyPiece(forthLineY, forthLineX)) {
+            matrix[forthLineY][forthLineX].piece->Threatened = true;
             break;
         }
 
-        matrix[forthLineY][forthLineX] = "■ ";
+        if (!isEmpty(forthLineY, forthLineX)) {
+            break;
+        }
+
+        matrix[forthLineY][forthLineX].movable = true;
 
         forthLineX--;
     }

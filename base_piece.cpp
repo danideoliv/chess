@@ -6,9 +6,9 @@ Piece::Piece() {
     Column = 0;
     Color = 0;
     Value = 0;
-    Type = FREE;
     Moved = false;
     Selected = false;
+    Threatened = false;
 }
 
 Piece::Piece(int row, int column, int color) {

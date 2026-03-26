@@ -24,7 +24,8 @@ void Knight::possibleSquares(Board matrix[][8]) {
     if (knightY - 2 >= 0) {
         if (knightX - 1 >= 0) {
             if (hasEnemyPiece(knightY - 2, knightX - 1)) {
-                // Farei algo
+                matrix[knightY - 2][knightX - 1].piece->Threatened = true;
+
             } else if (isEmpty(knightY - 2, knightX - 1)) {
                 matrix[knightY - 2][knightX - 1].movable = true;
             }
@@ -32,7 +33,7 @@ void Knight::possibleSquares(Board matrix[][8]) {
 
         if (knightX + 1 <= 7) {
             if (hasEnemyPiece(knightY - 2, knightX + 1)) {
-                // Farei algo
+                matrix[knightY - 2][knightX + 1].piece->Threatened = true;
             } else if (isEmpty(knightY - 2, knightX + 1)) {
                 matrix[knightY - 2][knightX + 1].movable = true;
             }
@@ -44,7 +45,7 @@ void Knight::possibleSquares(Board matrix[][8]) {
     if (knightX + 2 <= 7) {
         if (knightY - 1 >= 0) {
             if (hasEnemyPiece(knightY - 1, knightX + 2)) {
-                // Farei algo
+                matrix[knightY - 1][knightX + 2].piece->Threatened = true;
             } else if (isEmpty(knightY - 1, knightX + 2)) {
                 matrix[knightY - 1][knightX + 2].movable = true;
             }
@@ -52,7 +53,7 @@ void Knight::possibleSquares(Board matrix[][8]) {
 
         if (knightY + 1 <= 7) {
             if (hasEnemyPiece(knightY + 1, knightX + 2)) {
-                // Farei algo
+                matrix[knightY + 1][knightX + 2].piece->Threatened = true;
             } else if (isEmpty(knightY + 1, knightX + 2)) {
                 matrix[knightY + 1][knightX + 2].movable = true;
             }
@@ -64,7 +65,7 @@ void Knight::possibleSquares(Board matrix[][8]) {
     if (knightY + 2 <= 7) {
         if (knightX - 1 >= 0) {
             if (hasEnemyPiece(knightY + 2, knightX - 1)) {
-                // Farei algo
+                matrix[knightY + 2][knightX - 1].piece->Threatened = true;
             } else if (isEmpty(knightY + 2, knightX - 1)) {
                 matrix[knightY + 2][knightX - 1].movable = true;
             }
@@ -72,7 +73,7 @@ void Knight::possibleSquares(Board matrix[][8]) {
 
         if (knightX + 1 <= 7) {
             if (hasEnemyPiece(knightY + 2, knightX + 1)) {
-                // Farei algo
+                matrix[knightY + 2][knightX + 1].piece->Threatened = true;
             } else if (isEmpty(knightY + 2, knightX + 1)) {
                 matrix[knightY + 2][knightX + 1].movable = true;
             }
@@ -84,7 +85,7 @@ void Knight::possibleSquares(Board matrix[][8]) {
     if (knightX - 2 >= 0) {
         if (knightY - 1 >= 0) {
             if (hasEnemyPiece(knightY - 1, knightX - 2)) {
-                // Farei algo
+                matrix[knightY - 1][knightX - 2].piece->Threatened = true;
             } else if (isEmpty(knightY - 1, knightX - 2)) {
                 matrix[knightY - 1][knightX - 2].movable = true;
             }
@@ -92,7 +93,7 @@ void Knight::possibleSquares(Board matrix[][8]) {
 
         if (knightY + 1 <= 7) {
             if (hasEnemyPiece(knightY + 1, knightX - 2)) {
-                // Farei algo
+                matrix[knightY + 1][knightX - 2].piece->Threatened = true;
             } else if (isEmpty(knightY + 1, knightX - 2)) {
                 matrix[knightY + 1][knightX - 2].movable = true;
             }

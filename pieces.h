@@ -34,18 +34,18 @@ public:
     void possibleSquares(Board matrix[][8]) override;
 };
 
-// class Rook: public Piece {
-// public:
-//     Rook(int row, int column, int color);
+class Rook: public Piece {
+public:
+    Rook(int row, int column, int color);
 
-//     void possibleSquares(string matrix[][8], Board matrix2[][8]);
-// };
+    void possibleSquares(Board matrix[][8]) override;
+};
 
-// class Queen: public Piece {
-// public:
-//     Queen(int row, int column, int color);
+class Queen: public Piece {
+public:
+    Queen(int row, int column, int color);
 
-//     void possibleSquares(string matrix[][8], Board matrix2[][8]);
-// };
+    void possibleSquares(Board matrix[][8]) override;
+};
 
 #endif

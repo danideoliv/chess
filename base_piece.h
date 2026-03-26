@@ -17,6 +17,8 @@
 #define ROOK 4
 #define QUEEN 5
 
+const Color checkColor = {255, 68, 68, 255};
+
 using namespace std;
 
 struct Board;
@@ -30,11 +32,12 @@ public:
     int Type;
     bool Moved;
     bool Selected;
+    bool Threatened;
 
     Piece();  // Default constructor
     Piece(int row, int column, int color);
 
-    virtual void possibleSquares(Board board[][8]) = 0; // Pure virtual method for polymorphism
+    virtual void possibleSquares(Board board[][8]) = 0;
 
     void setType(int type);
 
@@ -49,6 +52,7 @@ struct Board {
     string location;
     Color drawColor;
     bool movable;
+    bool checked;
 };
 
 #endif

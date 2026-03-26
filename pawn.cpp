@@ -47,21 +47,21 @@ void Pawn::possibleSquares(Board matrix[][8]) {
 
     if (Color == BRANCO) {
         if (hasEnemyPiece(pawnY - 1, pawnX + 1)) {
-            // Farei algo
+            matrix[pawnY - 1][pawnX + 1].piece->Threatened = true;
         }
 
         if (hasEnemyPiece(pawnY - 1, pawnX - 1)) {
-            // Farei algo
+            matrix[pawnY - 1][pawnX - 1].piece->Threatened = true;
         }
     }
 
     if (Color == PRETO) {
         if (hasEnemyPiece(pawnY + 1, pawnX + 1)) {
-            // Farei algo
+            matrix[pawnY + 1][pawnX + 1].piece->Threatened = true;
         }
 
         if (hasEnemyPiece(pawnY + 1, pawnX - 1)) {
-            // Farei algo
+            matrix[pawnY + 1][pawnX - 1].piece->Threatened = true;
         }
     }
 }
